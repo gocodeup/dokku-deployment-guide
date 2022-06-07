@@ -82,8 +82,9 @@ We have created a simple script to deploy your applications to your server using
 - server's ip address
 - (optional) mailtrap credentials
 ```
-bash <(curl -sS https://raw.githubusercontent.com/gocodeup/dokku-deployment-guide/main/deploy.sh)
+bash <(curl -sS https://raw.githubusercontent.com/gocodeup/dokku-deployment-guide/java17/deploy.sh)
 ```
+https://github.com/gocodeup/dokku-deployment-guide/tree/java17
 After we have run the script above and have completed the deployment process we will see our domain's url in the terminal that we ran the script from. We should be able to click on the link to go to our live site. If we see a blue screen saying that there was an error there is a good chance that our application is just still in the process of building. If the blue screen does not go away we can find troubleshooting guides [here](https://cloud.digitalocean.com/networking).
 
 ## Pushing changes to already deployed application
@@ -104,4 +105,4 @@ git push dokku master
 ```
 
 ## Conclusion
-As we have made it to the bottom of the guide our app should be live. We now have an effective and easy way to push our new code to our server as we continue to build on our project. This guide is only to get our application deployed there are many features and commands that we can learn about to help us with managing our application on the server. To continue learning more about this tool we can find more guides [here](https://github.com/gocodeup/dokku-deployment-guide/blob/main/README.md#readme). 
+As we have made it to the bottom of the guide our app should be live. We now have an effective and easy way to push our new code to our server as we continue to build on our project. This guide is only to get our application deployed there are many features and commands that we can learn about to help us with managing our application on the server. To continue learning more about this tool we can find more guides [here](https://github.com/gocodeup/dokku-deployment-guide/blob/java17/README.md#readme). 
