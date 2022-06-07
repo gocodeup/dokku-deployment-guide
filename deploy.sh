@@ -113,7 +113,7 @@ if [ -f system.properties ];
   then
     echo "system.properties file found"
   else
-    echo "java.runtime.version=11" > system.properties
+    echo "java.runtime.version=17" > system.properties
     [[ $? -eq 0 ]] && echo "system.properties created"
 fi
 
