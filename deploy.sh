@@ -188,7 +188,7 @@ dokku letsencrypt:enable $APP_NAME
 echo "Setting cron job to renew HTTPS..."
 dokku letsencrypt:auto-renew $APP_NAME
 
-echo "Mysql Connection info..."
+echo "Mysql Cognnection info..."
 dokku mysql:info $DB_NAME --dsn
 dokku mysql:info $DB_NAME --exposed_port
 

@@ -72,3 +72,10 @@ Here is an example of the use below.
 
 bash <(curl -sS https://raw.githubusercontent.com/gocodeup/dokku-deployment-guide/java17/add_deployment_ssh.sh) 123.12.3.241 synthia
 ```
+
+
+Here is how you can get your mysql connection information
+
+```
+bash <(curl -sS https://raw.githubusercontent.com/gocodeup/dokku-deployment-guide/java17/mysql.sh)
+```
