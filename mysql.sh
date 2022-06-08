@@ -1,6 +1,9 @@
 #!/bin/bash
-IP_ADDRESS=$1
-PROJECT_NAME=$2
+
+
+
+read -p $'Name of the application (in lowercase): ' IP_ADDRESS
+read -p $'Name of the project (in lowercase): ' PROJECT_NAME
 
 echo "Retrieving ${PROJECT_NAME}'s public keys from github..."
 
