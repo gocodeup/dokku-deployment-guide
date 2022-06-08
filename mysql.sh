@@ -21,7 +21,7 @@ read -p $'Name of the application (in lowercase): ' APP_NAME
     echo "Application Name set as: $APP_NAME"
 
 
-echo "Retrieving $APP_NAME's public keys from github..."
+echo "Retrieving $APP_NAME's database info..."
 
 DB_NAME="${APP_NAME}_db"
 DB_PORT="9090"
