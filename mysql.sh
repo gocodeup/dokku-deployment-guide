@@ -27,7 +27,7 @@ DB_NAME="${APP_NAME}_db"
 DB_PORT="9090"
 
 
-ssh root@IP_ADDRESS bash << getmysqlinfo
+ssh root@$IP_ADDRESS bash << getmysqlinfo
 
 echo "Exposing port to user if not already..."
 dokku mysql:expose $DB_NAME $DB_PORT
