@@ -74,6 +74,7 @@ then
 fi
 
 DB_NAME="${APP_NAME}_db"
+DB_PORT="9090"
 
 if [[ $(curl -o /dev/null -s -w "%{http_code}" http://$IP_ADDRESS) -eq 200 ]]; then
 echo "We will now open your browser to a dokku setup page."
@@ -175,6 +176,9 @@ dokku config:set --no-restart "$APP_NAME" DOKKU_LETSENCRYPT_EMAIL=$EMAIL SPRING_
 echo "Adding domain to dokku app..."
 dokku domains:add $APP_NAME $DOMAIN
 
+echo "Exposing port to user..."
+dokku mysql:expose $DB_NAME $DB_PORT
+
 echo "Removing default domain from app..."
 dokku domains:remove $APP_NAME $APP_NAME
 
@@ -183,6 +187,10 @@ dokku letsencrypt:enable $APP_NAME
 
 echo "Setting cron job to renew HTTPS..."
 dokku letsencrypt:auto-renew $APP_NAME
+
+echo "Mysql Connection info..."
+dokku mysql:info $DB_NAME --dsn
+dokku mysql:info $DB_NAME --exposed_port
 
 echo "EXITING server..."
 setup_dokku
