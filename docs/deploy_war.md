@@ -39,5 +39,5 @@ Add the following plugin to your app's `pom.xml`
 
 Run this to deploy.. this is still in testing
 ```shell
-bash <(curl -sS https://raw.githubusercontent.com/gocodeup/dokku-deployment-guide/main/deploy_war.sh)
+bash <(curl -sS https://raw.githubusercontent.com/gocodeup/dokku-deployment-guide/java17/deploy_war.sh)
 ```
