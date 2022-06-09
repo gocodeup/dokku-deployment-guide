@@ -1,4 +1,20 @@
 # Dokku Database Management
+
+
+Running this script will return the 
+values needed to connect to the database from any 
+external utility such as IntelliJ.
+```
+bash <(curl -sS https://raw.githubusercontent.com/gocodeup/dokku-deployment-guide/java17/mysql.sh)
+```
+
+Once ran you would need to copy the values from the terminal into a new MySQL database connection. 
+Example in intellij:
+
+![Demo](img/intellij-example.png)
+
+
+
 This guide is to help you with the basic database management from creating to a database to deleting it. This guide will currently only be covering for Dokku's mysql plugin.
 ### Installing MySQL plugin
 To get us started when working with databases in Dokku we first have to install the mysql plugin. This is required when working with any external database in Dokku. To install the plugin you can ssh into your server and run the following command.
