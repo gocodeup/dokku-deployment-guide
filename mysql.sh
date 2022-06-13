@@ -63,16 +63,6 @@ ACTUAL_PORT=$(ssh root@$IP_ADDRESS bash << portinfo
 portinfo
 )
 
-
-
-
-#echo $DSN | sed "s/(@.*?\:)/$IP_ADDRESS/"
-
-#echo $DSN | grep -oP '(?<=@).*(?=:)'
-
-#echo ${DSN/(\@.*?\:)/$IP_ADDRESS}
-
-
 SQLUSER=$(echo "$DSN" | sed  's/mysql:\/\///; s/[@].*$//; s/[:].*$//')
 SQLPASS=$(echo "$DSN" | sed 's/mysql:\/\///; s/[@].*$//; s/.*[:]//')
 
