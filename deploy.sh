@@ -75,30 +75,6 @@ fi
 
 DB_NAME="${APP_NAME}_db"
 
-if [[ $(curl -o /dev/null -s -w "%{http_code}" http://$IP_ADDRESS) -eq 200 ]]; then
-echo "We will now open your browser to a dokku setup page."
-echo "click the blue button on the bottom that reads 'Finish Setup'."
-echo "DO NOT CHANGE ANYTHING IN THE FIELDS!"
-echo "After you click the button you will be redirected"
-echo "Once redirected come back to this terminal to continue."
-read -p "Press ENTER to open the page."
-open http://$IP_ADDRESS
-read -p "Press ENTER when you have clicked the 'Finish Setup' button."
-
-echo "Checking for dokku setup page status..."
-
-  while [[ $(curl -o /dev/null -s -w "%{http_code}" http://$IP_ADDRESS) -eq 200 ]];
-    do
-      echo "It appears the dokku setup page is still active."
-      echo "Please verify that you clicked the 'Finish Setup' Button"
-      echo "and that the page was then redirected"
-      read -p "After you have confirmed that the dokku setup page is not longer present press Enter to continue."
-  done
-
-echo "Successfully submitted dokku setup page."
-
-fi
-
 echo "TESTING MAVEN project..."
 mvn package
 if [ $? -ne 0 ]; then
@@ -113,7 +89,7 @@ if [ -f system.properties ];
   then
     echo "system.properties file found"
   else
-    echo "java.runtime.version=11" > system.properties
+    echo "java.runtime.version=20" > system.properties
     [[ $? -eq 0 ]] && echo "system.properties created"
 fi
 
@@ -138,6 +114,9 @@ if [ ! -f "/swapfile" ];
   else
     echo "swap partition found."
 fi
+
+echo "Setting global vhosts..."
+dokku domains:set-global $APP_NAME-droplet
 
 
 echo "Checking for dokku mysql plugin..."
@@ -173,19 +152,26 @@ echo "Adding app environment variables..."
 dokku config:set --no-restart "$APP_NAME" DOKKU_LETSENCRYPT_EMAIL=$EMAIL SPRING_JPA_HIBERNATE_DDLAUTO=update SPRING_JPA_SHOWSQL=true spring_mail_host=smtp.mailtrap.io spring_mail_port=2525 spring_mail_username=$MAILTRAPUSERNAME spring_mail_password=$MAILTRAPPASSWORD spring_mail_properties_mail_smtp_auth=true spring_mail_properties_mail_smtp_starttls_enable=true spring_mail_from=no-reply@$DOMAIN
 
 echo "Adding domain to dokku app..."
-dokku domains:add $APP_NAME $DOMAIN
+dokku domains:add $APP_NAME $DOMAIN www.$DOMAIN
 
 echo "Removing default domain from app..."
-dokku domains:remove $APP_NAME $APP_NAME
+dokku domains:remove $APP_NAME $APP_NAME $APP_NAME.$APP_NAME-droplet
+
+echo "Setting letsencrypt email..."
+dokku letsencrypt:set $APP_NAME email $EMAIL
 
 echo "Enabling HTTPS for your app..."
 dokku letsencrypt:enable $APP_NAME
 
 echo "Setting cron job to renew HTTPS..."
-dokku letsencrypt:auto-renew $APP_NAME
+dokku letsencrypt:cron-job --add
 
 echo "EXITING server..."
 setup_dokku
+
+echo "Adding deployment SSH keys to server..."
+cat ~/.ssh/id_rsa.pub | ssh root@$IP_ADDRESS dokku ssh-keys:add admin
+
 
 echo "Adding remote for deployment..."
 git remote add dokku dokku@$IP_ADDRESS:$APP_NAME
